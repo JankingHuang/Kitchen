@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Kitchen</string>
+    <string name="env">环境监测</string>
+    <string name="menu">安全知识</string>
+    <string name="switchs">开关状态</string>
+    <string name="home">菜谱</string>
+    <string name="search">环境</string>
+    <string name="profile">开关</string>
+    <string name="notification">Notify</string>
+    <string name="likes">开关</string>
+    <string name="launch_file_picker">Launch File Picker</string>
+    <string name="file_thumbnail">File thumbnail</string>
+    <string name="uri">Uri : %1$s</string>
+    <string name="size">Size :  %1$d</string>
+    <string name="mime">Mime: %1$s</string>
+    <string name="type">Type : %1$d</string>
+    <string name="name">Name : %1$s</string>
+    <string name="bucketname">BucketName : %1$s</string>
+    <string name="launch_audio_picker">Launch audio picker</string>
+    <string name="launch_video_picker">Launch video picker</string>
+    <string name="launch_image_picker">Launch image picker</string>
+    <string name="share_log">Share Log</string>
+</resources>

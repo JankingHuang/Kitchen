@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <com.gauravk.bubblenavigation.BubbleNavigationLinearView
+                android:id="@+id/bottom_navigation_view_linea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.gauravk.bubblenavigation.BubbleToggleView
+                    android:id="@+id/l_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:bt_active="true"
+                    app:bt_colorActive="@color/red_active"
+                    app:bt_colorInactive="@color/red_inactive"
+                    app:bt_icon="@drawable/temper"
+                    app:bt_shape="@drawable/transition_background_drawable_home"
+                    app:bt_title="温度" />
+
+                <com.gauravk.bubblenavigation.BubbleToggleView
+                    android:id="@+id/l_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:bt_active="true"
+                    app:bt_badgeBackgroundColor="@color/green_active"
+                    app:bt_colorActive="@color/blue_active"
+                    app:bt_colorInactive="@color/blue_inactive"
+                    app:bt_icon="@drawable/water"
+                    app:bt_shape="@drawable/transition_background_drawable_search"
+                    app:bt_title="湿度" />
+
+                <com.gauravk.bubblenavigation.BubbleToggleView
+                    android:id="@+id/yan_wu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:bt_active="true"
+                    app:bt_badgeBackgroundColor="@color/green_active"
+                    app:bt_colorActive="#000507"
+                    app:bt_colorInactive="#000507"
+                    app:bt_icon="@drawable/smoking"
+                    app:bt_shape="@drawable/transition_background_drawable_search"
+                    app:bt_title="烟雾" />
+
+                <com.gauravk.bubblenavigation.BubbleToggleView
+                    android:id="@+id/l_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:bt_active="true"
+                    app:bt_colorActive="@color/blue_grey_active"
+                    app:bt_colorInactive="@color/blue_grey_inactive"
+                    app:bt_icon="@drawable/burning"
+                    app:bt_shape="@drawable/transition_background_drawable_like"
+                    app:bt_title="甲烷" />
+            </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
+
+            <FrameLayout
+                android:id="@+id/ly_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </FrameLayout>
+        </LinearLayout>
+</LinearLayout>
