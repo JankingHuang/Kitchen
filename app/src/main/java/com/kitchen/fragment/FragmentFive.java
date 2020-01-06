@@ -72,7 +72,7 @@ public class FragmentFive extends Fragment {
         Request request = new Request.Builder()
                 .url(imageUrl)
                 .build();
-        try(Response response = client.newCall(request).execute()){
+        try (Response response = client.newCall(request).execute()) {
             InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
             userImage = BitmapFactory.decodeStream(inputStream);
             refreshUserData();
@@ -86,7 +86,7 @@ public class FragmentFive extends Fragment {
                 userName.setText(userName.getText() + ":" + getDataBean().getUserName());
                 userId.setText(userId.getText() + ":" + getDataBean().getUserID());
                 mobliePhone.setText(mobliePhone.getText() + ":" + getDataBean().getTelNum());
-//            eMail.setText(getUser.getData().get(0).get);
+                eMail.setText(eMail.getText() + ":" + getDataBean().getUserEmail());
                 userAvatar.setImageBitmap(userImage);
             }
         });

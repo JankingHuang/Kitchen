@@ -7,7 +7,7 @@ public class GetUser {
     /**
      * code : SUCCESS
      * msg : null
-     * data : [{"userID":"0624","userName":"张三","userPwd":"123412","telNum":"1234567812","userPhoto":"http://121.199.22.121/images/user.png"}]
+     * data : [{"userID":"062666","userName":"Jankin","userPwd":"123456","telNum":"15526426270","userPhoto":"http://121.199.22.121:8080/images/20200105200523_062666.jpg","userEmail":"archkernel@outlook.com"}]
      */
 
     private String code;
@@ -40,11 +40,12 @@ public class GetUser {
 
     public static class DataBean {
         /**
-         * userID : 0624
-         * userName : 张三
-         * userPwd : 123412
-         * telNum : 1234567812
-         * userPhoto : http://121.199.22.121/images/user.png
+         * userID : 062666
+         * userName : Jankin
+         * userPwd : 123456
+         * telNum : 15526426270
+         * userPhoto : http://121.199.22.121:8080/images/20200105200523_062666.jpg
+         * userEmail : archkernel@outlook.com
          */
 
         private String userID;
@@ -52,6 +53,7 @@ public class GetUser {
         private String userPwd;
         private String telNum;
         private String userPhoto;
+        private String userEmail;
 
         public String getUserID() {
             return userID;
@@ -91,6 +93,14 @@ public class GetUser {
 
         public void setUserPhoto(String userPhoto) {
             this.userPhoto = userPhoto;
+        }
+
+        public String getUserEmail() {
+            return userEmail;
+        }
+
+        public void setUserEmail(String userEmail) {
+            this.userEmail = userEmail;
         }
     }
 }
