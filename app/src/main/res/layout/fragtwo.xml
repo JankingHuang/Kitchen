@@ -68,6 +68,17 @@
                     app:bt_icon="@drawable/burning"
                     app:bt_shape="@drawable/transition_background_drawable_like"
                     app:bt_title="甲烷" />
+                <com.gauravk.bubblenavigation.BubbleToggleView
+                    android:id="@+id/list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:bt_active="true"
+                    app:bt_colorActive="@color/blue_grey_active"
+                    app:bt_colorInactive="@color/blue_grey_inactive"
+                    app:bt_icon="@drawable/ic_lightbulb_outline_black_24dp"
+                    app:bt_shape="@drawable/transition_background_drawable_like"
+                    app:bt_title="光强" />
+
             </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
 
             <FrameLayout

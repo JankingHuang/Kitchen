@@ -9,10 +9,21 @@ public class GlobalData extends Application {
     private String userID;
     public  Gson gson = new GsonBuilder().create();
     private  boolean isLogin = false;
+    private  int humidity;
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
+    }
 
     public boolean isLogin() {
         return isLogin;
     }
+
+
 
     public void setLogin(boolean login) {
         isLogin = login;

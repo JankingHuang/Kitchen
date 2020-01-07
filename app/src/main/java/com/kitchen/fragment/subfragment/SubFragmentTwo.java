@@ -7,35 +7,30 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.kitchen.utils.GlobalData;
 import com.kitchen.view.CircleProgress;
 import com.kitchen.activity.R;
 
 import java.util.Random;
 
-public class SubFragmentTwo extends Fragment implements View.OnClickListener {
+public class SubFragmentTwo extends Fragment{
 
     private CircleProgress mCircleProgress;
-    private Random mRandom;
-
+    private GlobalData globalData;
     public SubFragmentTwo() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
         View view = inflater.inflate(R.layout.fg_two, viewGroup, false);
-
         mCircleProgress = (CircleProgress) view.findViewById(R.id.circle_progress_bar);
-        mCircleProgress.setOnClickListener(this);
-        mRandom = new Random();
+        globalData = (GlobalData) getContext().getApplicationContext();
         return view;
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.circle_progress_bar:
-                mCircleProgress.setValue(mRandom.nextFloat() * mCircleProgress.getMaxValue());
-                break;
-        }
+    public void onResume() {
+        super.onResume();
+        mCircleProgress.setValue(globalData.getHumidity());
     }
 }

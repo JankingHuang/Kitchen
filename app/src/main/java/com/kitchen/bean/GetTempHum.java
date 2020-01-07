@@ -2,7 +2,7 @@ package com.kitchen.bean;
 
 import java.util.List;
 
-public class GetHumiture {
+public class GetTempHum {
 
     /**
      * code : SUCCESS

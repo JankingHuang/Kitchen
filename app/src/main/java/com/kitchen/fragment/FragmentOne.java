@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.kitchen.activity.R;
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.CardStackListener;
+import com.yuyakaido.android.cardstackview.CardStackView;
+import com.yuyakaido.android.cardstackview.Direction;
+import com.yuyakaido.android.cardstackview.internal.CardStackSetting;
 
 @SuppressLint("ValidFragment")
-public class FragmentOne extends Fragment  {
+public class FragmentOne extends Fragment  implements CardStackListener {
 
 
     public FragmentOne(){}
@@ -19,6 +24,38 @@ public class FragmentOne extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle){
         View view = inflater.inflate(R.layout.fragone,viewGroup,false);
+        CardStackView cardStackView = view.findViewById(R.id.card_stack_view);
+        cardStackView.setLayoutManager(new CardStackLayoutManager(getContext()));
         return view;
+    }
+
+    @Override
+    public void onCardDragging(Direction direction, float ratio) {
+
+    }
+
+    @Override
+    public void onCardSwiped(Direction direction) {
+
+    }
+
+    @Override
+    public void onCardRewound() {
+
+    }
+
+    @Override
+    public void onCardCanceled() {
+
+    }
+
+    @Override
+    public void onCardAppeared(View view, int position) {
+
+    }
+
+    @Override
+    public void onCardDisappeared(View view, int position) {
+
     }
 }

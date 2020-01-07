@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.kitchen.activity.R;
+import com.kitchen.fragment.subfragment.SubFragmentFive;
 import com.kitchen.fragment.subfragment.SubFragmentFour;
 import com.kitchen.fragment.subfragment.SubFragmentOne;
 import com.kitchen.fragment.subfragment.SubFragmentThree;
@@ -22,12 +23,13 @@ import java.util.Objects;
 
 public class FragmentTwo extends Fragment implements BubbleNavigationChangeListener {
 
-    private static final String TAG = "SubFragmentTwo";
+    private static final String TAG = "FragmentTwo";
     private BubbleNavigationLinearView bubbleNavigationConstraintView;
     private SubFragmentOne fgOne;
     private SubFragmentTwo fgTwo;
     private SubFragmentThree fgThree;
     private SubFragmentFour fgFour;
+    private SubFragmentFive fgFive;
     private FragmentManager fManager;
 
     public FragmentTwo() {
@@ -39,8 +41,6 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
         fManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
         bubbleNavigationConstraintView = view.findViewById(R.id.bottom_navigation_view_linea);
         bubbleNavigationConstraintView.setNavigationChangeListener(this);
-        Log.i(TAG, "onCreateView: ");
-
         FragmentTransaction fTransaction = fManager.beginTransaction();
         hideAllFragment(fTransaction);
         initFgOne(fTransaction);
@@ -81,6 +81,14 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
                     fTransaction.show(fgFour);
                 }
                 break;
+            case R.id.list:
+                if (fgFive == null) {
+                    fgFive = new SubFragmentFive();
+                    fTransaction.add(R.id.ly_content, fgFive);
+                } else {
+                    fTransaction.show(fgFive);
+                }
+                break;
         }
         fTransaction.commit();
     }
@@ -102,5 +110,6 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
         if (fgTwo != null) fragmentTransaction.hide(fgTwo);
         if (fgThree != null) fragmentTransaction.hide(fgThree);
         if (fgFour != null) fragmentTransaction.hide(fgFour);
+        if (fgFive != null) fragmentTransaction.hide(fgFive);
     }
 }

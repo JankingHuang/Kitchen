@@ -46,7 +46,7 @@ public class FragmentFive extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
-        View view = inflater.inflate(R.layout.fg_five, viewGroup, false);
+        View view = inflater.inflate(R.layout.fragment_five, viewGroup, false);
         initView(view);
         globalData = (GlobalData) getContext().getApplicationContext();
         return view;
