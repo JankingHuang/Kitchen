@@ -100,9 +100,9 @@ public class FragmentFive extends Fragment {
         userAvatar = (ImageView) view.findViewById(R.id.userAvatar);
         nickName = (TextView) view.findViewById(R.id.nickName);
         photoTime = (TextView) view.findViewById(R.id.photoTime);
-        btnDownload = (LinearLayout) view.findViewById(R.id.btn_download);
-        btnShare = (LinearLayout) view.findViewById(R.id.btn_share);
-        btnWallpaper = (LinearLayout) view.findViewById(R.id.btn_wallpaper);
+        btnDownload = (LinearLayout) view.findViewById(R.id.btn_theme);
+        btnShare = (LinearLayout) view.findViewById(R.id.btn_user_infor);
+        btnWallpaper = (LinearLayout) view.findViewById(R.id.btn_delete_user);
         detailTitle = (TextView) view.findViewById(R.id.detail_title);
         userId = (TextView) view.findViewById(R.id.user_id);
         userName = (TextView) view.findViewById(R.id.user_name);
