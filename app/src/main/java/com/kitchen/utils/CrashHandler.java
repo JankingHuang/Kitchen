@@ -3,6 +3,7 @@ package com.kitchen.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.kitchen.activity.CrashInforActivity;
 import com.kitchen.activity.R;
 
 import java.io.File;
@@ -76,9 +78,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler  {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            // 退出程序
-           // android.os.Process.killProcess(android.os.Process.myPid());
-            //System.exit(1);
         }
     }
 
@@ -96,20 +95,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler  {
         new Thread() {
             public void run() {
                 Looper.prepare();
-//                Toast.makeText(context, "", 0).show();
-//                new AlertDialog.Builder(dialogContext)
-//                        .setIcon(R.drawable.ic_warning_black_24dp)
-//                        .setTitle("程序异常")
-//                        .setMessage(result)
-//                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//
-//                            }
-//                        })
-//                        .create()
-//                        .show();
-                Toast.makeText(context, "很抱歉,程序出现异常"+result, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, CrashInforActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("crashInformation",result);
+                context.startActivity(intent);
                 Looper.loop();
             }
         }.start();
