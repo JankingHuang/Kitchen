@@ -1,6 +1,7 @@
 package com.kitchen.utils;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,6 +11,16 @@ public class GlobalData extends Application {
     public  Gson gson = new GsonBuilder().create();
     private  boolean isLogin = false;
     private  int humidity;
+
+
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
+    }
 
     public int getHumidity() {
         return humidity;

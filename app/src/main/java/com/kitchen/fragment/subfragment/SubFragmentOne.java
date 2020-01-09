@@ -69,7 +69,7 @@ public class SubFragmentOne extends Fragment {
 
         try (Response response = client.newCall(request).execute()) {
             String result = Objects.requireNonNull(response.body()).string();
-            Log.e(TAG, "runGetUser: " + result);
+            Log.e(TAG, "getTempHum: " + result);
             getTempHum = globalData.gson.fromJson(result, GetTempHum.class);
             tempControl.setTemp((int) getDataBean().getTemp());
             globalData.setHumidity((int) getDataBean().getHum());

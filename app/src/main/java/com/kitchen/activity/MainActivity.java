@@ -1,5 +1,6 @@
 package com.kitchen.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
+import com.kitchen.utils.GlobalData;
 import com.kitchen.view.PagerAdapter;
 
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, BubbleNavigationChangeListener {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         setContentView(R.layout.activity_main);
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+
         myAdapter = new PagerAdapter(getSupportFragmentManager());
         bindViews();
     }
