@@ -132,10 +132,6 @@ public class FragmentFive extends Fragment {
                             e.printStackTrace();
                         }
                     }
-
-                    private String getUserID() {
-                        return globalData.getUserID();
-                    }
                 }).start();
             }
         });
@@ -222,6 +218,21 @@ public class FragmentFive extends Fragment {
         try (Response response = client.newCall(request).execute()) {
             String result = response.body().string();
             Log.e(TAG, "runDeleteUser: " + result);
+            DeleteUser deleteUser = globalData.gson.fromJson(result,DeleteUser.class);
+            if("SUCCESS".equals(deleteUser.getCode())){
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), "用户注销成功", Toast.LENGTH_SHORT).show();
+                        try {
+                            Thread.sleep(3*1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Objects.requireNonNull(getActivity()).finish();
+                    }
+                });
+            }
         }
     }
 
