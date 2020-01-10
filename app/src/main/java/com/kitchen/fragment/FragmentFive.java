@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -25,12 +26,14 @@ import com.jaiselrahman.filepicker.activity.FilePickerActivity;
 import com.jaiselrahman.filepicker.config.Configurations;
 import com.jaiselrahman.filepicker.model.MediaFile;
 import com.kitchen.activity.R;
-import com.kitchen.activity.SignupActivity;
 import com.kitchen.bean.DeleteUser;
 import com.kitchen.bean.GetUser;
+import com.kitchen.bean.UserAlter;
 import com.kitchen.utils.GlobalData;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -53,15 +56,11 @@ public class FragmentFive extends Fragment {
     private GetUser getUser;
     private DeleteUser deleteUser;
     private ImageView userAvatar;
-    private TextView nickName;
-    private TextView photoTime;
     private LinearLayout btnTheme;
     private LinearLayout btnUserInfor;
     private LinearLayout btnDeleteUser;
-    private TextView detailTitle;
     private TextView userId;
     private TextView userName;
-    private View viewColor;
     private TextView mobliePhone;
     private TextView eMail;
     private Bitmap userImage;
@@ -69,7 +68,8 @@ public class FragmentFive extends Fragment {
     private EditText edtMail;
     private EditText edtMobile;
     private EditText edtName;
-    private EditText EdtPasswd;
+    private EditText edtPasswd;
+
     private String userID;
     private String password;
     private String name;
@@ -163,11 +163,14 @@ public class FragmentFive extends Fragment {
     }
 
     private void initDialogView(View view) {
-        edtUserId = view.findViewById(R.id.input_id_infor);
         edtMail = view.findViewById(R.id.input_email_infor);
         edtMobile = view.findViewById(R.id.input_mobile_infor);
         edtName = view.findViewById(R.id.input_name_infor);
-        EdtPasswd = view.findViewById(R.id.input_password_infor);
+        edtPasswd = view.findViewById(R.id.input_password_infor);
+        edtMail.setText(email);
+        edtMobile.setText(mobile);
+        edtName.setText(name);
+        edtPasswd.setText(password);
     }
 
     private void viewListener(View view, int p) {
@@ -176,7 +179,11 @@ public class FragmentFive extends Fragment {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.btn_save_infor:
-                        postUserData(filePath);
+                        name = String.valueOf(edtName.getText());
+                        email = String.valueOf(edtMail.getText());
+                        password = String.valueOf(edtPasswd.getText());
+                        mobile = String.valueOf(edtMobile.getText());
+                        postUserData();
                         break;
                     case R.id.select_image_infor:
                         Intent intent = new Intent(getContext(), FilePickerActivity.class);
@@ -226,6 +233,17 @@ public class FragmentFive extends Fragment {
         try (Response response = client.newCall(request).execute()) {
             InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
             userImage = BitmapFactory.decodeStream(inputStream);
+            //FIXME:由于生命周期的关系，filepaht会被原有的覆盖。即无法更换头像
+            File dir = new File(String.valueOf(Environment.getExternalStorageDirectory()));
+            if (!dir.exists())
+                dir.mkdir();
+            File file = new File(dir+"/imge.jpg");
+            filePath = file.getPath();
+            Log.e(TAG, "getUserPhotoPath: "+filePath);
+            FileOutputStream fos = new FileOutputStream(file);
+            userImage.compress(Bitmap.CompressFormat.JPEG,100,fos);
+            fos.flush();
+            fos.close();
             refreshUserData();
         }
     }
@@ -234,10 +252,15 @@ public class FragmentFive extends Fragment {
         Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                userName.setText(userName.getText() + ":" + getDataBean().getUserName());
-                userId.setText(userId.getText() + ":" + getDataBean().getUserID());
-                mobliePhone.setText(mobliePhone.getText() + ":" + getDataBean().getTelNum());
-                eMail.setText(eMail.getText() + ":" + getDataBean().getUserEmail());
+                userID = getDataBean().getUserID();
+                name = getDataBean().getUserName();
+                mobile = getDataBean().getTelNum();
+                email = getDataBean().getUserEmail();
+                password = getDataBean().getUserPwd();
+                userName.setText("用户名:"+name );
+                userId.setText("用户ID:" + userID);
+                mobliePhone.setText("电话:" +mobile);
+                eMail.setText("邮箱:" +email);
                 userAvatar.setImageBitmap(userImage);
             }
         });
@@ -249,15 +272,11 @@ public class FragmentFive extends Fragment {
 
     private void initView(View view) {
         userAvatar = (ImageView) view.findViewById(R.id.userAvatar);
-        nickName = (TextView) view.findViewById(R.id.nickName);
-        photoTime = (TextView) view.findViewById(R.id.photoTime);
         btnTheme = (LinearLayout) view.findViewById(R.id.btn_theme);
         btnUserInfor = (LinearLayout) view.findViewById(R.id.btn_user_infor);
         btnDeleteUser = (LinearLayout) view.findViewById(R.id.btn_delete_user);
-        detailTitle = (TextView) view.findViewById(R.id.detail_title);
         userId = (TextView) view.findViewById(R.id.user_id);
         userName = (TextView) view.findViewById(R.id.user_name);
-        viewColor = (View) view.findViewById(R.id.view_color);
         mobliePhone = (TextView) view.findViewById(R.id.moblie_phone);
         eMail = (TextView) view.findViewById(R.id.e_mail);
     }
@@ -281,7 +300,7 @@ public class FragmentFive extends Fragment {
         }).start();
     }
 
-    private void postUserData(final String filePath) {
+    private void postUserData() {
         /*
          *@Author Jankin
          *@Description 上传用户修改后的信息
@@ -292,7 +311,7 @@ public class FragmentFive extends Fragment {
             public void run() {
                 try {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        boolean result = userAlter(filePath);
+                        boolean result = userAlter();
                         Message message = myHandler.obtainMessage();
                         message.what = 2;
                         message.obj = result;
@@ -329,22 +348,21 @@ public class FragmentFive extends Fragment {
         }
     }
 
-    public boolean userAlter(String filePath) throws Exception {
+    public boolean userAlter() throws Exception {
         // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("userID", userID)
+                .addFormDataPart("userID",userID)
                 .addFormDataPart("userName", name)
                 .addFormDataPart("userPwd", password)
                 .addFormDataPart("telNum", mobile)
                 .addFormDataPart("userEmail", email)
                 .addFormDataPart("img", userID + ".jpg",
-                        RequestBody.create(MEDIA_TYPE_PNG, new File(
-                                filePath)))
+                        RequestBody.create(MEDIA_TYPE_PNG, new File(filePath)))
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://121.199.22.121:8080/kit/userRegister?")
+                .url("http://121.199.22.121:8080/kit/userAlter?")
                 .post(requestBody)
                 .build();
 
@@ -352,13 +370,8 @@ public class FragmentFive extends Fragment {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "userAlter: " + result);
-//            UserAlter userAlter = globalData.gson.fromJson(response.body().string(), UserAlter.class);
-//            if ("SUCCESS".equals(userAlter.getCode())) {
-//                return true;
-//            } else {
-//                return false;
-//            }
-            return false;
+            UserAlter userAlter = globalData.gson.fromJson(result, UserAlter.class);
+            return "SUCCESS".equals(userAlter.getCode());
         }
     }
 
@@ -371,6 +384,7 @@ public class FragmentFive extends Fragment {
             filePath = (data.<MediaFile>getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES)
                     .get(0))
                     .getPath();
+            Log.e(TAG, "onActivityResult: "+filePath);
         }
     }
 }
