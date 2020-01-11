@@ -9,9 +9,11 @@ kitchen是个人毕业设计的移动监控系统，项目使用AndroidX命名�
 - - >https://github.com/google/gson
 - Glide
 - - >https://bumptech.github.io/glide/
+- MPAndroidChart
+- - > https://github.com/PhilJay/MPAndroidChart
 
 ## 大体框架清单
-- [ ] 完成安全知识的获取于显示
+- [ ] 完成安全知识的获取与显示
 - [x] 完成环境数据的实时显示
 - [ ] 完成设备的添加及相关操作
 - [ ] 完成设备的配置
@@ -19,7 +21,7 @@ kitchen是个人毕业设计的移动监控系统，项目使用AndroidX命名�
 ## Http接口完成清单
 - [x] userRegister：用户注册
 - [x] login：用户登入
-- [x] logout：用户注销
+- [x] logout：用户注销g
 - [x] userAlter：用户信息修改
 - [x] getHum：获取温湿度
 - [x] getEqu：获取设备
