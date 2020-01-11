@@ -37,6 +37,8 @@ import com.kitchen.view.TempControl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import okhttp3.OkHttpClient;
@@ -47,21 +49,44 @@ public class SubFragmentOne extends Fragment {
 
     private static final String TAG = "SubFragmentOne";
     private TempControl tempControl;
+    private ArrayList<Entry> entryArrayList;
+    private ArrayList<BarEntry> barEntryArrayList;
+    private CombinedData combinedData;
+    private CombinedChart combinedChart;
+    private XAxis xAxis;
 
     public SubFragmentOne(){}
     private GetTempHum getTempHum;
     private GlobalData globalData;
     private OkHttpClient client = new OkHttpClient();
-    protected final String[] months = new String[] {
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt"
-    };
+    private List<String> labels = new ArrayList<String>();
     private  final  int count = 10;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle){
         View view = inflater.inflate(R.layout.fg_one,viewGroup,false);
         globalData = (GlobalData) Objects.requireNonNull(getContext()).getApplicationContext();
+//        labels.add("1");
+//        labels.add("2");
+//        labels.add("3");
+//        labels.add("4");
+//        labels.add("5");
+//        labels.add("6");
+//        labels.add("7");
+//        labels.add("8");
+//        labels.add("9");
+//        labels.add("10");
 
-        CombinedChart combinedChart = view.findViewById(R.id.combine_chart);
+        drawerChart(view);
+        tempControl = view.findViewById(R.id.temp_control);
+        // 设置几格代表温度1度
+        tempControl.setAngleRate(1);
+        //设置指针是否可旋转
+        tempControl.setCanRotate(true);
+        return view;
+    }
+
+    private void drawerChart(View view) {
+        combinedChart = view.findViewById(R.id.combine_chart);
         combinedChart.getDescription().setEnabled(false);
         combinedChart.setBackgroundColor(Color.WHITE);
         combinedChart.setDrawGridBackground(false);
@@ -89,46 +114,34 @@ public class SubFragmentOne extends Fragment {
         leftAxis.setDrawGridLines(false);
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
-        XAxis xAxis = combinedChart.getXAxis();
+        xAxis = combinedChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
         xAxis.setAxisMinimum(0f);
         xAxis.setGranularity(1f);
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return months[(int) value % months.length];
+                int index = (int) value;
+                if (index < 0 || index >= labels.size()) {
+                    return "";
+                }
+                return labels.get(index);
             }
         });
 
-        CombinedData combinedData = new CombinedData();
-        combinedData.setData(generateLineData());
-        combinedData.setData(generateBarData());
-//        combinedData.setData(generateBubbleData());
-//        combinedData.setData(generateCandleData());
-//        combinedData.setData(generateScatterData());
-        combinedChart.setData(combinedData);
-
-        xAxis.setAxisMaximum(combinedData.getXMax() + 0.25f);
-
-        combinedChart.setData(combinedData);
-        combinedChart.invalidate();
-        tempControl = view.findViewById(R.id.temp_control);
-        // 设置几格代表温度1度
-        tempControl.setAngleRate(1);
-        //设置指针是否可旋转
-        tempControl.setCanRotate(true);
-        return view;
+        combinedData = new CombinedData();
     }
+
     private LineData generateLineData() {
 
         LineData d = new LineData();
 
-        ArrayList<Entry> entries = new ArrayList<>();
+        entryArrayList = new ArrayList<>();
 
         for (int index = 0; index < count; index++)
-            entries.add(new Entry(index + 0.25f, getRandom(15, 5)));
+            entryArrayList.add(new Entry(index + 0.25f, (float) getTempHum.getData().get(index).getTemp()));
 
-        LineDataSet set = new LineDataSet(entries, "");
+        LineDataSet set = new LineDataSet(entryArrayList, "温度");
         set.setColor(Color.rgb(240, 238, 70));
         set.setLineWidth(2.5f);
         set.setCircleColor(Color.rgb(240, 238, 70));
@@ -150,14 +163,14 @@ public class SubFragmentOne extends Fragment {
     }
     private BarData generateBarData() {
 
-        ArrayList<BarEntry> entries1 = new ArrayList<>();
+        barEntryArrayList = new ArrayList<>();
         ArrayList<BarEntry> entries2 = new ArrayList<>();
 
         for (int index = 0; index < count; index++) {
-            entries1.add(new BarEntry(0, getRandom(25, 25)));
+            barEntryArrayList.add(new BarEntry(0, (float) getTempHum.getData().get(index).getHum()));
         }
 
-        BarDataSet set1 = new BarDataSet(entries1, "Bar 1");
+        BarDataSet set1 = new BarDataSet(barEntryArrayList, "湿度");
         set1.setColor(Color.rgb(60, 220, 78));
         set1.setValueTextColor(Color.rgb(60, 220, 78));
         set1.setValueTextSize(10f);
@@ -191,6 +204,20 @@ public class SubFragmentOne extends Fragment {
                     if(userID == null)
                         return ;
                     runGetHum("http://121.199.22.121:8080/kit/getHum?userID="+userID);
+
+                    combinedData.setData(generateLineData());
+                    combinedData.setData(generateBarData());
+                    combinedChart.setData(combinedData);
+                    for(int i = 0;i<10;i++) {
+                        String string = getTempHum.getData().get(i).getHumTime();
+                        String[] result = string.split(" ");
+                        Log.e(TAG, "run: "+ Arrays.toString(result));
+                        labels.add(result[result.length -1 ]);
+                    }
+                    xAxis.setAxisMaximum(combinedData.getXMax() + 0.25f);
+
+                    combinedChart.setData(combinedData);
+                    combinedChart.invalidate();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
