@@ -57,14 +57,6 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
             case R.id.l_home:
                 initFgOne(fTransaction);
                 break;
-            case R.id.l_search:
-                if (fgTwo == null) {
-                    fgTwo = new SubFragmentTwo();
-                    fTransaction.add(R.id.ly_content, fgTwo);
-                } else {
-                    fTransaction.show(fgTwo);
-                }
-                break;
             case R.id.yan_wu:
                 if (fgThree == null) {
                     fgThree = new SubFragmentThree();
