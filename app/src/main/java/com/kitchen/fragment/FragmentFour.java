@@ -12,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.kitchen.activity.R;
+import com.kitchen.bean.AddEquipment;
 import com.kitchen.bean.GetEquipment;
 import com.kitchen.bean.Register;
 import com.kitchen.utils.Control;
@@ -35,6 +38,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import cn.iwgang.countdownview.CountdownView;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -54,7 +58,6 @@ public class FragmentFour extends Fragment implements AdapterView.OnItemClickLis
     private GlobalData globalData ;
     private String userID;
     private OkHttpClient client = new OkHttpClient();
-
 
 
     @Override
@@ -158,13 +161,65 @@ public class FragmentFour extends Fragment implements AdapterView.OnItemClickLis
 
     protected void showAddDialog() {
         LayoutInflater factory = LayoutInflater.from(getContext());
-        final View textEntryView = factory.inflate(R.layout.dialog_layout, null);
-        AlertDialog.Builder ad1 = new AlertDialog.Builder(getContext());
+        final View view = factory.inflate(R.layout.dialog_layout, null);
+        final AlertDialog.Builder ad1 = new AlertDialog.Builder(getContext());
+        Spinner spinnerEquipmentType = view.findViewById(R.id.spinner_equiment_type);
+        Spinner spinnerEquipmentTime = view.findViewById(R.id.spinner_equiment_limit_time);
+        final EditText equipmentTime = view.findViewById(R.id.edit_equipment_time);
+         final String[] resultType = new String[1];
+         final String[] resultTime = new String[1];
+        spinnerEquipmentTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                resultTime[0] = getActivity().getResources().getStringArray(R.array.array_Equipment_Limint_Time)[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerEquipmentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                resultType[0] = getActivity().getResources().getStringArray(R.array.array_Equipment)[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         ad1.setTitle("连接设备");
         ad1.setIcon(R.drawable.connection);
-        ad1.setView(textEntryView);
+        ad1.setView(view);
         ad1.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int i) {
+                AddEquipment addEquipment = new AddEquipment();
+                Log.e(TAG, "onClick: "+resultTime[0] +"/n"+resultType[0]);
+                String aux[] = resultTime[0].split(" ");
+                int time = Integer.parseInt(aux[0]);
+                String[] string = resultType[0].split(" ");
+                String type = string[0];
+                String name = string[1];
+                String resultTime1 = equipmentTime.getText().toString().trim();
+                addEquipment.setEquName(string[1]);
+                addEquipment.setEquType(string[0]);
+                addEquipment.setEquTime(resultTime1);
+                addEquipment.setEquYear(time);
+                addEquipment.setUserID(globalData.getUserID());
+                final String json = globalData.gson.toJson(addEquipment);
+                Log.e(TAG, "onClick: "+json);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            FragmentFour.this.run(json);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
         ad1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -172,6 +227,18 @@ public class FragmentFour extends Fragment implements AdapterView.OnItemClickLis
             }
         });
         ad1.show();
+    }
+    public static final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
+    public void run(String json) throws Exception {
+        Request request = new Request.Builder()
+                .url("http://121.199.22.121:8080/kit/addEqu")
+                .post(RequestBody.create(JSON, json))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            System.out.println(response.body().string());
+        }
     }
 }
 
