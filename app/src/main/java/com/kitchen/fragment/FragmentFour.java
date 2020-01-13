@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.kitchen.activity.R;
 import com.kitchen.bean.AddEquipment;
+import com.kitchen.bean.DeleteEquipment;
 import com.kitchen.bean.GetEquipment;
 import com.kitchen.bean.Register;
 import com.kitchen.utils.Control;
@@ -138,8 +139,49 @@ public class FragmentFour extends Fragment implements AdapterView.OnItemClickLis
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+        Log.e(TAG, "onItemClick: "+position);
+        new AlertDialog.Builder(getContext())
+                .setTitle("警告")
+                .setMessage("该设备将会被删除！！！！")
+                .setIcon(R.drawable.ic_warning_black_24dp)
+                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //TODO:发送deletEquipment
+                        // {
+                        //            "userID": "062999",
+                        //            "equTime": "2018-06-10 24:00:07",
+                        //            "equType": "E215"
+                        //        }
+                        Log.e(TAG, "onClick: "+list.get(position));
+                        String queTime = (String) list.get(position).get("equipmentTime");
+                        String queType = (String) list.get(position).get("equipmentType");
+                        DeleteEquipment deleteEquipment = new DeleteEquipment();
+                        deleteEquipment.setEquTime(queTime);
+                        deleteEquipment.setEquType(queType);
+                        deleteEquipment.setUserID(userID);
+                        final String json = globalData.gson.toJson(deleteEquipment);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    FragmentFour.this.run("http://121.199.22.121:8080/kit/deleteEqu",json);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+                    }
+                })
+                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
+                    }
+                })
+                .create()
+                .show();;
     }
 
     @Override
@@ -214,7 +256,7 @@ public class FragmentFour extends Fragment implements AdapterView.OnItemClickLis
                     @Override
                     public void run() {
                         try {
-                            FragmentFour.this.run(json);
+                            FragmentFour.this.run("http://121.199.22.121:8080/kit/addEqu",json);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -229,9 +271,9 @@ public class FragmentFour extends Fragment implements AdapterView.OnItemClickLis
         ad1.show();
     }
     public static final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
-    public void run(String json) throws Exception {
+    public void run(String url,String json) throws Exception {
         Request request = new Request.Builder()
-                .url("http://121.199.22.121:8080/kit/addEqu")
+                .url(url)
                 .post(RequestBody.create(JSON, json))
                 .build();
 
