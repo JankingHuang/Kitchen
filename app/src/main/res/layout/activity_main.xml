@@ -58,7 +58,7 @@
             app:bt_icon="@drawable/controls"
             app:bt_titleSize="10dp"
             app:bt_shape="@drawable/transition_background_drawable_like"
-            app:bt_title="设备配置"
+            app:bt_title="设备控制"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" />
 
@@ -70,7 +70,7 @@
             app:bt_icon="@drawable/settings"
             app:bt_titleSize="10dp"
             app:bt_shape="@drawable/transition_background_drawable_like"
-            app:bt_title="设备控制"
+            app:bt_title="设备配置"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" />
 

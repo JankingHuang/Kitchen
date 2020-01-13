@@ -39,10 +39,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler  {
     private Thread.UncaughtExceptionHandler mDefaultHandler;// 系统默认的UncaughtException处理类
     private static CrashHandler INSTANCE = new CrashHandler();// CrashHandler实例
     private Context context;// 程序的Context对象
-    private Context dialogContext;
     private Map<String, String> info = new HashMap<String, String>();// 用来存储设备信息和异常信息
-    private SimpleDateFormat format = new SimpleDateFormat(
-            "yyyy-MM-dd-HH-mm-ss");// 用于格式化日期,作为日志文件名的一部分
 
     /** 保证只有一个CrashHandler实例 */
     private CrashHandler() {
@@ -72,12 +69,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler  {
         if (!handleException(ex) && mDefaultHandler != null) {
             // 如果自定义的没有处理则让系统默认的异常处理器来处理
             mDefaultHandler.uncaughtException(thread, ex);
-        } else {
-            try {
-                thread.sleep(3000);// 如果处理了，让程序继续运行3秒再退出，保证文件保存并上传到服务器
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 

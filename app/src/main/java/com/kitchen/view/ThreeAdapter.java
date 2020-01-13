@@ -76,8 +76,8 @@ public class ThreeAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = layoutInflater.inflate(R.layout.item, null);
         ImageView logo = view.findViewById(R.id.logo);
-        TextView title = view.findViewById(R.id.title);
-        TextView note = view.findViewById(R.id.note);
+        TextView title = view.findViewById(R.id.txv_equipment_type);
+        TextView note = view.findViewById(R.id.txv_equipment_name);
         JellyToggleButton jellyToggleButton = view.findViewById(R.id.jtb_21);
         CountdownView countdownView = view.findViewById(R.id.cv_countdownView);
 

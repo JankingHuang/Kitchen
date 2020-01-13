@@ -32,15 +32,13 @@ import java.util.Map;
 import cn.iwgang.countdownview.CountdownView;
 
 
-public class FragmentThree extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener, Control {
+public class FragmentThree extends Fragment implements AdapterView.OnItemClickListener,  Control {
 
 
     private static final String TAG = "SubFragmentThree";
-    private ActionButton actionButton;
+
     private JellyToggleButton jellyToggleButton;
     private ListView listView;
-    private View dialogView;
-    LayoutInflater inflaterDialog;
 
 
     private List<Map<String, Object>> list;
@@ -51,21 +49,16 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_three, viewGroup, false);
-        inflaterDialog = inflater;
+
         initView(view);
         initListView(listView);
-
         return view;
     }
 
     private void initView(View view) {
         listView = view.findViewById(R.id.fragment_three_listview);
-        actionButton = view.findViewById(R.id.action_button);
-        actionButton.setImageResource(R.drawable.fab_plus_icon);
-        actionButton.setButtonColor(Color.parseColor("#1FDF6C"));
-        actionButton.setOnClickListener(this);
+
         jellyToggleButton = view.findViewById(R.id.jtb_21);
-        dialogView = inflaterDialog.inflate(R.layout.dialog_layout, null);
     }
 
     private void initListView(ListView listView) {
@@ -104,30 +97,6 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
         Log.i(TAG, "onItemClick: ");
     }
 
-    @Override
-    public void onClick(View v) {
-        Log.i(TAG, "onClick: Fab");
-        showAddDialog();
-    }
-
-
-    protected void showAddDialog() {
-        LayoutInflater factory = LayoutInflater.from(getContext());
-        final View textEntryView = factory.inflate(R.layout.dialog_layout, null);
-        AlertDialog.Builder ad1 = new AlertDialog.Builder(getContext());
-        ad1.setTitle("连接设备");
-        ad1.setIcon(R.drawable.connection);
-        ad1.setView(textEntryView);
-        ad1.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int i) {
-            }
-        });
-        ad1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int i) {
-            }
-        });
-        ad1.show();
-    }
 
 
     @Override
