@@ -65,7 +65,7 @@ public class SubFragmentFour extends Fragment{
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "Respone:" + result);
             getMethane = globalData.gson.fromJson(result, GetMethane.class);
-            if(getMethane.getData().size() == 0)
+            if(getMethane.getData() == null)
                 return;
             Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                 @Override

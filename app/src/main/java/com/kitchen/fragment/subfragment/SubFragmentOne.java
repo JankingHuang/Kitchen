@@ -234,6 +234,8 @@ public class SubFragmentOne extends Fragment {
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "getTempHum: " + result);
             getTempHum = globalData.gson.fromJson(result, GetTempHum.class);
+            if(getTempHum.getData() == null)
+                return;
             tempControl.setTemp((int) getDataBean().getTemp());
             globalData.setHumidity((int) getDataBean().getHum());
         }

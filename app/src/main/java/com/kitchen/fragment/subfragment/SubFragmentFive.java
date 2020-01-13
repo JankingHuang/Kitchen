@@ -70,6 +70,8 @@ public class SubFragmentFive extends Fragment {
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "Response: " + result);
             GetLight getLight = globalData.gson.fromJson(result, GetLight.class);
+            if(getLight.getData() == null)
+                return;
             lightControl.setTemp((int) getLight.getData().get(0).getLight());
         }
     }

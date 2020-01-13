@@ -66,6 +66,8 @@ public class SubFragmentThree extends Fragment {
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "Respone:" + result);
             getSmog = globalData.gson.fromJson(result, GetSmog.class);
+            if(getSmog.getData() == null)
+                return;
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
