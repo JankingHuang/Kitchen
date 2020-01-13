@@ -114,24 +114,12 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
     protected void showAddDialog() {
         LayoutInflater factory = LayoutInflater.from(getContext());
         final View textEntryView = factory.inflate(R.layout.dialog_layout, null);
-        final EditText editTextName = textEntryView.findViewById(R.id.editTextName);
-        final EditText editTextNumEditText = textEntryView.findViewById(R.id.editTextNum);
         AlertDialog.Builder ad1 = new AlertDialog.Builder(getContext());
         ad1.setTitle("连接设备");
         ad1.setIcon(R.drawable.connection);
         ad1.setView(textEntryView);
         ad1.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int i) {
-                Log.i("editTextName", editTextName.getText().toString());
-                Log.i("editTextNumEditText", editTextNumEditText.getText().toString());
-
-                Map<String, Object> addMap = new HashMap<>();
-                addMap.put("logo", R.drawable.smoke256);
-                addMap.put("title", editTextName.getText().toString());
-                addMap.put("note", editTextNumEditText.getText().toString());
-                addMap.put("state", false);
-                list.add(addMap);
-                threeAdapter.notifyDataSetChanged();
             }
         });
         ad1.setNegativeButton("取消", new DialogInterface.OnClickListener() {

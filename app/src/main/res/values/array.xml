@@ -3,4 +3,14 @@
     <integer-array name="icon">
         <item>@drawable/one</item>
     </integer-array>
+    <string-array name="array_Equipment">
+        <item>E215 温湿度传感器</item>
+        <item>E216 烟雾传感器</item>
+        <item>E217 甲烷传感器</item>
+        <item>E218 光敏传感器</item>
+    </string-array>
+    <string-array name="array_Equipment_Limint_Time">
+        <item>10 年</item>
+        <item>4 年</item>
+    </string-array>
 </resources>

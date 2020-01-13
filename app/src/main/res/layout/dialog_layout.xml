@@ -5,28 +5,38 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/dialog_layout_add_equiment"
+        android:text="设备类型" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinner_equiment_type"
+        android:entries="@array/array_Equipment"
+        style="@style/dialog_layout_add_equiment" />
+
+    <TextView
+        style="@style/dialog_layout_add_equiment"
         android:text="设备名称" />
 
     <EditText
         android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        style="@style/dialog_layout_add_equiment">
 
-        <requestFocus />
     </EditText>
-
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="设备号码" />
+        style="@style/dialog_layout_add_equiment"
+        android:text="设备时间" />
 
     <EditText
-        android:id="@+id/editTextNum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:id="@+id/edit_equipment_time"
+        style="@style/dialog_layout_add_equiment" />
+
+    <TextView
+        style="@style/dialog_layout_add_equiment"
+        android:text="设备年限" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinner_equiment_limit_time"
+        android:entries="@array/array_Equipment_Limint_Time"
+        style="@style/dialog_layout_add_equiment" />
 
 </LinearLayout>
