@@ -1,4 +1,4 @@
-package com.kitchen.fragment.subfragment;
+package com.kitchen.fragment.twosubfragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -66,7 +66,7 @@ public class SubFragmentThree extends Fragment {
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "Respone:" + result);
             getSmog = globalData.gson.fromJson(result, GetSmog.class);
-            if(getSmog.getData() == null)
+            if(getSmog.getData() == null || getSmog.getData().size() == 0)
                 return;
             getActivity().runOnUiThread(new Runnable() {
                 @Override

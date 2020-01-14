@@ -162,6 +162,7 @@ public class FragmentFour extends Fragment implements AdapterView.OnItemClickLis
                         deleteEquipment.setEquType(queType);
                         deleteEquipment.setUserID(userID);
                         final String json = globalData.gson.toJson(deleteEquipment);
+                        Log.e(TAG, "DeleteEquipment: "+json);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -279,7 +280,8 @@ public class FragmentFour extends Fragment implements AdapterView.OnItemClickLis
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-            System.out.println(response.body().string());
+            String result = response.body().string();
+            Log.e(TAG, "run: "+result );
         }
     }
 }

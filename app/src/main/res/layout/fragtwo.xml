@@ -57,6 +57,7 @@
                     app:bt_icon="@drawable/burning"
                     app:bt_shape="@drawable/transition_background_drawable_like"
                     app:bt_title="甲烷" />
+
                 <com.gauravk.bubblenavigation.BubbleToggleView
                     android:id="@+id/list"
                     android:layout_width="wrap_content"
@@ -76,4 +77,5 @@
                 android:layout_height="match_parent">
             </FrameLayout>
         </LinearLayout>
+
 </LinearLayout>

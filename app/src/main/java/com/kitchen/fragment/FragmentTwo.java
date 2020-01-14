@@ -13,11 +13,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.kitchen.activity.R;
-import com.kitchen.fragment.subfragment.SubFragmentFive;
-import com.kitchen.fragment.subfragment.SubFragmentFour;
-import com.kitchen.fragment.subfragment.SubFragmentOne;
-import com.kitchen.fragment.subfragment.SubFragmentThree;
-import com.kitchen.fragment.subfragment.SubFragmentTwo;
+import com.kitchen.fragment.twosubfragment.SubFragmentFive;
+import com.kitchen.fragment.twosubfragment.SubFragmentFour;
+import com.kitchen.fragment.twosubfragment.SubFragmentOne;
+import com.kitchen.fragment.twosubfragment.SubFragmentThree;
 
 import java.util.Objects;
 
@@ -26,7 +25,6 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
     private static final String TAG = "FragmentTwo";
     private BubbleNavigationLinearView bubbleNavigationConstraintView;
     private SubFragmentOne fgOne;
-    private SubFragmentTwo fgTwo;
     private SubFragmentThree fgThree;
     private SubFragmentFour fgFour;
     private SubFragmentFive fgFive;
@@ -45,7 +43,6 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
         hideAllFragment(fTransaction);
         initFgOne(fTransaction);
         fTransaction.commit();
-
         return view;
     }
 
@@ -89,7 +86,7 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
         if (fgOne == null) {
             fgOne = new SubFragmentOne();
             fTransaction.add(R.id.ly_content, fgOne);
-            Log.i(TAG, "onNavigationChanged: null");
+            Log.i(TAG, "onNavigationChanged: 11222223");
         } else {
             fTransaction.show(fgOne);
             Log.i(TAG, "onNavigationChanged: ");
@@ -99,7 +96,6 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
     //隐藏所有Fragment
     private void hideAllFragment(FragmentTransaction fragmentTransaction) {
         if (fgOne != null) fragmentTransaction.hide(fgOne);
-        if (fgTwo != null) fragmentTransaction.hide(fgTwo);
         if (fgThree != null) fragmentTransaction.hide(fgThree);
         if (fgFour != null) fragmentTransaction.hide(fgFour);
         if (fgFive != null) fragmentTransaction.hide(fgFive);

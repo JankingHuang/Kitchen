@@ -1,4 +1,4 @@
-package com.kitchen.fragment.subfragment;
+package com.kitchen.fragment.twosubfragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.kitchen.bean.GetMethane;
-import com.kitchen.bean.GetSmog;
 import com.kitchen.utils.GlobalData;
 import com.kitchen.view.CircleProgress;
 import com.kitchen.activity.R;
@@ -65,7 +64,7 @@ public class SubFragmentFour extends Fragment{
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "Respone:" + result);
             getMethane = globalData.gson.fromJson(result, GetMethane.class);
-            if(getMethane.getData() == null)
+            if(getMethane.getData() == null || getMethane.getData().size() == 0)
                 return;
             Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                 @Override

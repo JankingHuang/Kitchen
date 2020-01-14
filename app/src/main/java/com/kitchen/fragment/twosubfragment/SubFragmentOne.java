@@ -1,4 +1,4 @@
-package com.kitchen.fragment.subfragment;
+package com.kitchen.fragment.twosubfragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,20 +16,11 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.BubbleData;
-import com.github.mikephil.charting.data.BubbleDataSet;
-import com.github.mikephil.charting.data.BubbleEntry;
-import com.github.mikephil.charting.data.CandleData;
-import com.github.mikephil.charting.data.CandleDataSet;
-import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.ScatterData;
-import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.kitchen.activity.R;
 import com.kitchen.bean.GetTempHum;
 import com.kitchen.utils.GlobalData;
@@ -48,7 +39,6 @@ import okhttp3.Response;
 public class SubFragmentOne extends Fragment {
 
     private static final String TAG = "SubFragmentOne";
-    private TempControl tempControl;
     private ArrayList<Entry> entryArrayList;
     private ArrayList<BarEntry> barEntryArrayList;
     private CombinedData combinedData;
@@ -65,23 +55,7 @@ public class SubFragmentOne extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle){
         View view = inflater.inflate(R.layout.fg_one,viewGroup,false);
         globalData = (GlobalData) Objects.requireNonNull(getContext()).getApplicationContext();
-//        labels.add("1");
-//        labels.add("2");
-//        labels.add("3");
-//        labels.add("4");
-//        labels.add("5");
-//        labels.add("6");
-//        labels.add("7");
-//        labels.add("8");
-//        labels.add("9");
-//        labels.add("10");
-
         drawerChart(view);
-        tempControl = view.findViewById(R.id.temp_control);
-        // 设置几格代表温度1度
-        tempControl.setAngleRate(1);
-        //设置指针是否可旋转
-        tempControl.setCanRotate(true);
         return view;
     }
 
@@ -196,7 +170,6 @@ public class SubFragmentOne extends Fragment {
     public void onResume() {
         super.onResume();
         final String userID = globalData.getUserID();
-        tempControl.setTemp(13);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -234,9 +207,9 @@ public class SubFragmentOne extends Fragment {
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "getTempHum: " + result);
             getTempHum = globalData.gson.fromJson(result, GetTempHum.class);
-            if(getTempHum.getData() == null)
+            if (getTempHum.getData().size() == 0 || getTempHum.getData() == null)
+            if(getTempHum.getData() == null || getTempHum.getData().size() == 0)
                 return;
-            tempControl.setTemp((int) getDataBean().getTemp());
             globalData.setHumidity((int) getDataBean().getHum());
         }
     }

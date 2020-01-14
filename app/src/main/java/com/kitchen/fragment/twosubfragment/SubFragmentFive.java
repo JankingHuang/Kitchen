@@ -1,4 +1,4 @@
-package com.kitchen.fragment.subfragment;
+package com.kitchen.fragment.twosubfragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import com.kitchen.activity.R;
 import com.kitchen.bean.GetLight;
-import com.kitchen.bean.GetTempHum;
 import com.kitchen.utils.GlobalData;
 import com.kitchen.view.TempControl;
 
@@ -70,7 +69,7 @@ public class SubFragmentFive extends Fragment {
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "Response: " + result);
             GetLight getLight = globalData.gson.fromJson(result, GetLight.class);
-            if(getLight.getData() == null)
+            if(getLight.getData() == null | getLight.getData().size() == 0)
                 return;
             lightControl.setTemp((int) getLight.getData().get(0).getLight());
         }

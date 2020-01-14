@@ -4,18 +4,12 @@
     android:layout_height="match_parent"
     android:background="#ECF4F9">
 
-    <com.kitchen.view.TempControl
-        android:id="@+id/temp_control"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="40dp" />
     <com.github.mikephil.charting.charts.CombinedChart
         android:id="@+id/combine_chart"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
