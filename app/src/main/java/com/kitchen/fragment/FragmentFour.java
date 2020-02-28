@@ -182,7 +182,7 @@ public class FragmentFour extends Fragment implements AdapterView.OnItemClickLis
                     }
                 })
                 .create()
-                .show();;
+                .show();
     }
 
     @Override

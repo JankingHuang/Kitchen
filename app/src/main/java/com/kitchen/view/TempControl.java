@@ -43,7 +43,7 @@ public class TempControl extends View {
     // 温度显示画笔
     private Paint tempPaint;
     // 文本提示
-    private String title = "温度值(°C)";
+    private String title = "光照强度";
     // 温度
     private int temperature = 10;
     // 最低温度

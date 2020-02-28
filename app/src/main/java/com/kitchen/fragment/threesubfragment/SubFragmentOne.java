@@ -58,25 +58,19 @@ public class SubFragmentOne extends Fragment implements AdapterView.OnItemClickL
     private void initListView(ListView listView) {
         list = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
-        map.put("logo", R.drawable.thermometer256);
-        map.put("title", "温度");
+        map.put("logo", R.drawable.ic_highlight_black_24dp);
+        map.put("title", "照明");
         map.put("note", "设备号：257");
         map.put("state", true);
         list.add(map);
 
         map = new HashMap<>();//新建一个避免覆盖
-        map.put("logo", R.drawable.humidity256);
-        map.put("title", "湿度");
+        map.put("logo", R.drawable.ic_sync_black_24dp);
+        map.put("title", "通风");
         map.put("note", "设备号：255");
         map.put("state", false);
         list.add(map);
 
-        map = new HashMap<>();
-        map.put("logo", R.drawable.smoke256);
-        map.put("title", "烟雾浓度");
-        map.put("note", "设备号：256");
-        map.put("state", false);
-        list.add(map);
 
         threeAdapter = new ThreeAdapter(getContext());
         threeAdapter.setList(list);

@@ -1,6 +1,7 @@
 package com.kitchen.fragment;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,7 @@ import com.jaiselrahman.filepicker.activity.FilePickerActivity;
 import com.jaiselrahman.filepicker.config.Configurations;
 import com.jaiselrahman.filepicker.model.MediaFile;
 import com.kitchen.activity.R;
+import com.kitchen.bean.DeleteEquipment;
 import com.kitchen.bean.DeleteUser;
 import com.kitchen.bean.GetUser;
 import com.kitchen.bean.UserAlter;
@@ -56,7 +58,6 @@ public class FragmentFive extends Fragment {
     private GetUser getUser;
     private DeleteUser deleteUser;
     private ImageView userAvatar;
-    private LinearLayout btnTheme;
     private LinearLayout btnUserInfor;
     private LinearLayout btnDeleteUser;
     private TextView userId;
@@ -120,24 +121,36 @@ public class FragmentFive extends Fragment {
         btnDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String userID = globalData.getUserID();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            if (userID == null)
-                                return;
-                            runDeleteUser("http://121.199.22.121:8080/kit/logout?userID=" + userID);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-            }
-        });
-        btnTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("警告")
+                        .setMessage("该用户将会被注销！！！！")
+                        .setIcon(R.drawable.ic_warning_black_24dp)
+                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                final String userID = globalData.getUserID();
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            if (userID == null)
+                                                return;
+                                            runDeleteUser("http://121.199.22.121:8080/kit/logout?userID=" + userID);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }).start();
+                            }
+                        })
+                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .create()
+                        .show();
 
             }
         });
@@ -283,7 +296,6 @@ public class FragmentFive extends Fragment {
 
     private void initView(View view) {
         userAvatar = (ImageView) view.findViewById(R.id.userAvatar);
-        btnTheme = (LinearLayout) view.findViewById(R.id.btn_theme);
         btnUserInfor = (LinearLayout) view.findViewById(R.id.btn_user_infor);
         btnDeleteUser = (LinearLayout) view.findViewById(R.id.btn_delete_user);
         userId = (TextView) view.findViewById(R.id.user_id);

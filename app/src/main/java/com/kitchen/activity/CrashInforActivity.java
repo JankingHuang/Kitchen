@@ -27,6 +27,7 @@ public class CrashInforActivity extends AppCompatActivity {
                 textViewCrashInfor.setText(intent.getStringExtra("crashInformation"));
             }
         });
+        finish();
     }
 
     private void Listener() {
