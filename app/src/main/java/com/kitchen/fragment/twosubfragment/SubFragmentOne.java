@@ -173,26 +173,28 @@ public class SubFragmentOne extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    if(userID == null)
-                        return ;
-                    runGetHum("http://121.199.22.121:8080/kit/getHum?userID="+userID);
+                while (true) {
+                    try {
+                        if (userID == null)
+                            return;
+                        runGetHum("http://121.199.22.121:8080/kit/getHum?userID=" + userID);
 
-                    combinedData.setData(generateLineData());
-                    combinedData.setData(generateBarData());
-                    combinedChart.setData(combinedData);
-                    for(int i = 0;i<10;i++) {
-                        String string = getTempHum.getData().get(i).getHumTime();
-                        String[] result = string.split(" ");
-                        Log.e(TAG, "run: "+ Arrays.toString(result));
-                        labels.add(result[result.length -1 ]);
+                        combinedData.setData(generateLineData());
+                        combinedData.setData(generateBarData());
+                        combinedChart.setData(combinedData);
+                        for (int i = 0; i < 10; i++) {
+                            String string = getTempHum.getData().get(i).getHumTime();
+                            String[] result = string.split(" ");
+                            Log.e(TAG, "run: " + Arrays.toString(result));
+                            labels.add(result[result.length - 1]);
+                        }
+                        xAxis.setAxisMaximum(combinedData.getXMax() + 0.25f);
+                        combinedChart.setData(combinedData);
+                        combinedChart.invalidate();
+                        Thread.sleep(2*1000);
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
                     }
-                    xAxis.setAxisMaximum(combinedData.getXMax() + 0.25f);
-
-                    combinedChart.setData(combinedData);
-                    combinedChart.invalidate();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         }).start();

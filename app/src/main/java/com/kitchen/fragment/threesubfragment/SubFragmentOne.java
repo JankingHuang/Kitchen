@@ -1,16 +1,12 @@
-package com.kitchen.fragment.freesubfragment;
+package com.kitchen.fragment.threesubfragment;
 
-import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
 
@@ -21,7 +17,6 @@ import com.kitchen.utils.Control;
 import com.kitchen.view.ThreeAdapter;
 import com.nightonke.jellytogglebutton.JellyToggleButton;
 import com.nightonke.jellytogglebutton.State;
-import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,7 +27,7 @@ import java.util.Map;
 import cn.iwgang.countdownview.CountdownView;
 
 
-public class FreeSubFragmentOne extends Fragment implements AdapterView.OnItemClickListener,  Control {
+public class SubFragmentOne extends Fragment implements AdapterView.OnItemClickListener,  Control {
 
 
     private static final String TAG = "SubFragmentThree";

@@ -32,7 +32,7 @@
                     app:bt_colorInactive="@color/red_inactive"
                     app:bt_icon="@drawable/temper"
                     app:bt_shape="@drawable/transition_background_drawable_home"
-                    app:bt_title="温度" />
+                    app:bt_title="温湿度" />
 
 
                 <com.gauravk.bubblenavigation.BubbleToggleView

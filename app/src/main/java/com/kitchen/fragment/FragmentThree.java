@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.kitchen.activity.R;
-import com.kitchen.fragment.freesubfragment.FreeSubFragmentOne;
+import com.kitchen.fragment.threesubfragment.SubFragmentOne;
 
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ public class FragmentThree extends Fragment implements BubbleNavigationChangeLis
     private static final String TAG = "FragmentTwo";
     private BubbleNavigationLinearView bubbleNavigationConstraintView;
     private FragmentManager fManager;
-    private FreeSubFragmentOne fgOne;
+    private SubFragmentOne fgOne;
 
     public FragmentThree() {
     }
@@ -54,7 +54,7 @@ public class FragmentThree extends Fragment implements BubbleNavigationChangeLis
 
     private void initFgOne(FragmentTransaction fTransaction) {
         if (fgOne == null) {
-            fgOne = new FreeSubFragmentOne();
+            fgOne = new SubFragmentOne();
             fTransaction.add(R.id.ly_content1, fgOne);
             Log.i(TAG, "onNavigationChanged: null");
         } else {
