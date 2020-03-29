@@ -13,10 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.kitchen.activity.R;
-import com.kitchen.fragment.twosubfragment.SubFragmentFive;
-import com.kitchen.fragment.twosubfragment.SubFragmentFour;
-import com.kitchen.fragment.twosubfragment.SubFragmentOne;
-import com.kitchen.fragment.twosubfragment.SubFragmentThree;
+import com.kitchen.fragment.threesubfragment.SubFragmentOne;
 
 import java.util.Objects;
 
@@ -24,20 +21,17 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
 
     private static final String TAG = "FragmentTwo";
     private BubbleNavigationLinearView bubbleNavigationConstraintView;
-    private SubFragmentOne fgOne;
-    private SubFragmentThree fgThree;
-    private SubFragmentFour fgFour;
-    private SubFragmentFive fgFive;
     private FragmentManager fManager;
+    private SubFragmentOne fgOne;
 
     public FragmentTwo() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
-        View view = inflater.inflate(R.layout.fragtwo, viewGroup, false);
+        View view = inflater.inflate(R.layout.fragthree, viewGroup, false);
         fManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-        bubbleNavigationConstraintView = view.findViewById(R.id.bottom_navigation_view_linea);
+        bubbleNavigationConstraintView = view.findViewById(R.id.bottom_navigation_view_linea1);
         bubbleNavigationConstraintView.setNavigationChangeListener(this);
         FragmentTransaction fTransaction = fManager.beginTransaction();
         hideAllFragment(fTransaction);
@@ -51,32 +45,8 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
         FragmentTransaction fTransaction = fManager.beginTransaction();
         hideAllFragment(fTransaction);
         switch (view.getId()) {
-            case R.id.l_home:
+            case R.id.l_home1:
                 initFgOne(fTransaction);
-                break;
-            case R.id.yan_wu:
-                if (fgThree == null) {
-                    fgThree = new SubFragmentThree();
-                    fTransaction.add(R.id.ly_content, fgThree);
-                } else {
-                    fTransaction.show(fgThree);
-                }
-                break;
-            case R.id.l_list:
-                if (fgFour == null) {
-                    fgFour = new SubFragmentFour();
-                    fTransaction.add(R.id.ly_content, fgFour);
-                } else {
-                    fTransaction.show(fgFour);
-                }
-                break;
-            case R.id.list:
-                if (fgFive == null) {
-                    fgFive = new SubFragmentFive();
-                    fTransaction.add(R.id.ly_content, fgFive);
-                } else {
-                    fTransaction.show(fgFive);
-                }
                 break;
         }
         fTransaction.commit();
@@ -85,8 +55,8 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
     private void initFgOne(FragmentTransaction fTransaction) {
         if (fgOne == null) {
             fgOne = new SubFragmentOne();
-            fTransaction.add(R.id.ly_content, fgOne);
-            Log.i(TAG, "onNavigationChanged: 11222223");
+            fTransaction.add(R.id.ly_content1, fgOne);
+            Log.i(TAG, "onNavigationChanged: null");
         } else {
             fTransaction.show(fgOne);
             Log.i(TAG, "onNavigationChanged: ");
@@ -96,8 +66,5 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
     //隐藏所有Fragment
     private void hideAllFragment(FragmentTransaction fragmentTransaction) {
         if (fgOne != null) fragmentTransaction.hide(fgOne);
-        if (fgThree != null) fragmentTransaction.hide(fgThree);
-        if (fgFour != null) fragmentTransaction.hide(fgFour);
-        if (fgFive != null) fragmentTransaction.hide(fgFive);
     }
 }

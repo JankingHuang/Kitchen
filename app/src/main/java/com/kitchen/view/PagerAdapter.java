@@ -7,19 +7,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.kitchen.activity.MainActivity;
-import com.kitchen.fragment.FragmentFive;
 import com.kitchen.fragment.FragmentFour;
-import com.kitchen.fragment.FragmentOne;
 import com.kitchen.fragment.FragmentThree;
+import com.kitchen.fragment.FragmentOne;
 import com.kitchen.fragment.FragmentTwo;
 
 public class PagerAdapter extends FragmentPagerAdapter {
-    private final int PAGER_COUNT = 5;
+    private final int PAGER_COUNT = 4;
     private FragmentOne fragmentOne = null;
     private FragmentTwo fragmentTwo = null;
     private FragmentThree fragmentThree = null;
     private FragmentFour fragmentFour = null;
-    private FragmentFive fragmentFive = null;
+//    private FragmentFive fragmentFive = null;
 
 
     public PagerAdapter(FragmentManager fm) {
@@ -28,7 +27,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
         fragmentTwo = new FragmentTwo();
         fragmentThree = new FragmentThree();
         fragmentFour = new FragmentFour();
-        fragmentFive = new FragmentFive();
+//        fragmentFive = new FragmentFive();
     }
 
 
@@ -64,10 +63,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
             case MainActivity.PAGE_FOUR:
                 fragment = fragmentFour;
                 break;
-            case MainActivity.PAGE_FIVE:
-                fragment = fragmentFive;
-                break;
-
         }
         return fragment;
     }

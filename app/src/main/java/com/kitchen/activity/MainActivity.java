@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public static final int PAGE_TWO = 1;
     public static final int PAGE_THREE = 2;
     public static final int PAGE_FOUR = 3;
-    public static final int PAGE_FIVE = 4;
+//    public static final int PAGE_FIVE = 4;
     private BubbleNavigationLinearView bubbleNavigationConstraintView;
 
     @Override
@@ -74,9 +74,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 case PAGE_FOUR:
                     bubbleNavigationConstraintView.setCurrentActiveItem(3);
                     break;
-                case PAGE_FIVE:
-                    bubbleNavigationConstraintView.setCurrentActiveItem(4);
-                    break;
+
             }
         }
     }
@@ -95,9 +93,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 break;
             case 3:
                 vPager.setCurrentItem(PAGE_FOUR);
-                break;
-            case 4:
-                vPager.setCurrentItem(PAGE_FIVE);
                 break;
         }
     }

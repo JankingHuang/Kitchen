@@ -32,18 +32,6 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/l_item_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bt_active="false"
-            app:bt_colorActive="@color/red_active"
-            app:bt_colorInactive="@color/red_inactive"
-            app:bt_icon="@drawable/menu"
-            app:bt_shape="@drawable/transition_background_drawable_home"
-            app:bt_title="安全知识"
-            app:bt_titleSize="10dp" />
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -190,7 +190,12 @@ public class SubFragmentOne extends Fragment {
                         }
                         xAxis.setAxisMaximum(combinedData.getXMax() + 0.25f);
                         combinedChart.setData(combinedData);
-                        combinedChart.invalidate();
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                combinedChart.invalidate();
+                            }
+                        });
                         Thread.sleep(2*1000);
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
