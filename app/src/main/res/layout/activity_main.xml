@@ -41,8 +41,7 @@
             app:bt_colorInactive="@color/blue_inactive"
             app:bt_icon="@drawable/env"
             app:bt_shape="@drawable/transition_background_drawable_search"
-            app:bt_title="环境监控"
-            app:bt_titleSize="10dp" />
+            app:bt_title="环境监控" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_profile_list"
@@ -53,8 +52,7 @@
             app:bt_colorInactive="@color/blue_grey_inactive"
             app:bt_icon="@drawable/controls"
             app:bt_shape="@drawable/transition_background_drawable_like"
-            app:bt_title="设备控制"
-            app:bt_titleSize="10dp" />
+            app:bt_title="设备控制" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_profile_list1"
@@ -65,8 +63,7 @@
             app:bt_colorInactive="@color/green_inactive"
             app:bt_icon="@drawable/settings"
             app:bt_shape="@drawable/transition_background_drawable_like"
-            app:bt_title="设备配置"
-            app:bt_titleSize="10dp" />
+            app:bt_title="设备配置" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_profile_list2"
@@ -77,8 +74,7 @@
             app:bt_colorInactive="@color/purple_inactive"
             app:bt_icon="@drawable/user"
             app:bt_shape="@drawable/transition_background_drawable_like"
-            app:bt_title="个人中心"
-            app:bt_titleSize="10dp" />
+            app:bt_title="个人中心" />
     </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

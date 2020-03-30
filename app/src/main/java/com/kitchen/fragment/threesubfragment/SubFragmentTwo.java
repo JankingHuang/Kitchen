@@ -88,42 +88,6 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
             }
         });
         dialog.show();
-//
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//        final SeekBar seekBar = new SeekBar(getContext());
-//        seekBar.setMax(100);
-//        seekBar.setKeyProgressIncrement(1);
-//
-//        builder.setTitle("请设定阈值");
-//        builder.setView(seekBar);
-//
-//        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-//                //获取 i
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//        });
-//
-//        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                dialogInterface.dismiss();
-//            }
-//        });
-//
-//        builder.create();
-//        builder.show();
-
     }
 
     @Override
