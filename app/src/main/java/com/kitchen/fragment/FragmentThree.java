@@ -122,7 +122,12 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
             }
         }
         Log.e(TAG, "runOk: --->list data "+ Arrays.toString(list.toArray()));
-        fourAdapter.notifyDataSetChanged();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                fourAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 

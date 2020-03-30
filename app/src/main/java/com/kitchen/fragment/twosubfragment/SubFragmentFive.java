@@ -68,10 +68,15 @@ public class SubFragmentFive extends Fragment {
         try (Response response = client.newCall(request).execute()) {
             String result = Objects.requireNonNull(response.body()).string();
             Log.e(TAG, "Response: " + result);
-            GetLight getLight = globalData.gson.fromJson(result, GetLight.class);
+            final GetLight getLight = globalData.gson.fromJson(result, GetLight.class);
             if(getLight.getData() == null | getLight.getData().size() == 0)
                 return;
-            lightControl.setTemp((int) getLight.getData().get(0).getLight());
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    lightControl.setTemp((int) getLight.getData().get(0).getLight());
+                }
+            });
         }
     }
 }

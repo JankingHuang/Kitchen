@@ -57,12 +57,17 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
         Log.e(TAG, "onCreateView: I am SubFragmentTwo");
         initView();
         initListView();
+//        getData();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        getData();
+    }
+
+    private void getData() {
         Log.e(TAG, "onResume: I appear ");
         userID = globalData.getUserID();
         Log.e(TAG, "onResume: "+userID);
@@ -133,6 +138,7 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
         showDialog();
     }
     public void runOk() throws Exception {
+        list.clear();
         // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -161,7 +167,12 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
                 list.add(equipmentInfo);
             }
         }
-        arrayAdapter.notifyDataSetChanged();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 }
