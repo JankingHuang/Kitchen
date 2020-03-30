@@ -196,7 +196,7 @@ public class SubFragmentOne extends Fragment {
                                 combinedChart.invalidate();
                             }
                         });
-                        Thread.sleep(2*1000);
+                        Thread.sleep(60*1000);
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }

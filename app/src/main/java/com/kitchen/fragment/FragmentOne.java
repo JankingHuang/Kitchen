@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class FragmentOne extends Fragment implements BubbleNavigationChangeListener {
 
-    private static final String TAG = "FragmentTwo";
+    private static final String TAG = "FragmentOne";
     private BubbleNavigationLinearView bubbleNavigationConstraintView;
     private SubFragmentOne fgOne;
     private SubFragmentThree fgThree;

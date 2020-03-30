@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.kitchen.activity.R;
+import com.kitchen.fragment.threesubfragment.SubFragmentTwo;
 import com.kitchen.fragment.threesubfragment.SubFragmentOne;
 
 import java.util.Objects;
@@ -23,6 +24,7 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
     private BubbleNavigationLinearView bubbleNavigationConstraintView;
     private FragmentManager fManager;
     private SubFragmentOne fgOne;
+    private SubFragmentTwo fgTwo;
 
     public FragmentTwo() {
     }
@@ -48,6 +50,14 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
             case R.id.l_home1:
                 initFgOne(fTransaction);
                 break;
+            case R.id.yan_wu1:
+                if(fgTwo == null){
+                    fgTwo = new SubFragmentTwo();
+                    fTransaction.add(R.id.ly_content1,fgTwo);
+                }else{
+                    fTransaction.show(fgTwo);
+                }
+                break;
         }
         fTransaction.commit();
     }
@@ -66,5 +76,6 @@ public class FragmentTwo extends Fragment implements BubbleNavigationChangeListe
     //隐藏所有Fragment
     private void hideAllFragment(FragmentTransaction fragmentTransaction) {
         if (fgOne != null) fragmentTransaction.hide(fgOne);
+        if(fgTwo != null) fragmentTransaction.hide(fgTwo);
     }
 }
