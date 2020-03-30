@@ -1,6 +1,7 @@
 package com.kitchen.fragment.threesubfragment;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.kitchen.activity.R;
+import com.warkiz.widget.IndicatorSeekBar;
+import com.warkiz.widget.OnSeekChangeListener;
+import com.warkiz.widget.SeekParams;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,40 +57,72 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
     }
 
     private void showDialog(){
+
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View view = inflater.inflate(R.layout.customize_dialog_layout,null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        final SeekBar seekBar = new SeekBar(getContext());
-        seekBar.setMax(100);
-        seekBar.setKeyProgressIncrement(1);
-
-        builder.setTitle("请设定阈值");
-        builder.setView(seekBar);
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        builder.setView(view);
+        final Dialog dialog = builder.create();
+        view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                //获取 i
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
+            public void onClick(View view) {
+                dialog.dismiss();
+                //把阈值发送给服务器
             }
         });
-
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        ((IndicatorSeekBar)view.findViewById(R.id.seekbar)).setOnSeekChangeListener(new OnSeekChangeListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+            public void onSeeking(SeekParams seekParams) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+                Log.e(TAG, "onStartTrackingTouch: "+seekBar.getProgress());
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                Log.e(TAG, "onStopTrackingTouch: "+seekBar.getProgress());
+                //获取阈值
             }
         });
-
-        builder.create();
-        builder.show();
+        dialog.show();
+//
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//        final SeekBar seekBar = new SeekBar(getContext());
+//        seekBar.setMax(100);
+//        seekBar.setKeyProgressIncrement(1);
+//
+//        builder.setTitle("请设定阈值");
+//        builder.setView(seekBar);
+//
+//        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+//                //获取 i
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//        });
+//
+//        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//            }
+//        });
+//
+//        builder.create();
+//        builder.show();
 
     }
 
