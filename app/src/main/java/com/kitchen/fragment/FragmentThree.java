@@ -27,6 +27,7 @@ import com.scalified.fab.ActionButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ import okhttp3.Response;
 
 public class FragmentThree extends Fragment implements AdapterView.OnItemClickListener, Control, View.OnClickListener {
 
-    private static final String TAG = "FragmentFour";
+    private static final String TAG = "FragmentThree";
     private ListView listView;
     private List<Map<String, Object>> list;
     private FourAdapter fourAdapter;
@@ -75,6 +76,7 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
     public void onResume() {
         super.onResume();
         userID = globalData.getUserID();
+        Log.e(TAG, "onResume: I appear ");
         Log.e(TAG, "onResume: "+userID);
         new Thread(new Runnable() {
             @Override
@@ -91,6 +93,7 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
     }
 
     public void runOk() throws Exception {
+        list.clear();
         // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -115,9 +118,11 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
                 map.put("equipmentLimitTime", getEquipment.getData().get(i).getEquYear());
                 map.put("equipmentTime", getEquipment.getData().get(i).getEquTime());
                 list.add(map);
+                Log.e(TAG, "runOk: ----->"+i);
             }
         }
-        initListView(listView);
+        Log.e(TAG, "runOk: --->list data "+ Arrays.toString(list.toArray()));
+        fourAdapter.notifyDataSetChanged();
     }
 
 

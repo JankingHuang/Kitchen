@@ -17,40 +17,77 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.kitchen.activity.R;
+import com.kitchen.bean.GetEquipment;
+import com.kitchen.utils.GlobalData;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickListener {
 
     private List<String> list;
     private static  String TAG = "SubFragmentTow";
+    private GlobalData globalData ;
+    private OkHttpClient client = new OkHttpClient();
+    private String userID;
+    private View view;
+    private ListView listView;
+    private ArrayAdapter<String> arrayAdapter;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
-        View view = inflater.inflate(R.layout.fragment_sub_two, viewGroup, false);
+        view = inflater.inflate(R.layout.fragment_sub_two, viewGroup, false);
+        globalData = (GlobalData) getContext().getApplicationContext();
         list = new ArrayList<>();
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        initView(view);
         Log.e(TAG, "onCreateView: I am SubFragmentTwo");
+        initView();
+        initListView();
         return view;
     }
 
-    private void initView(View view) {
-        ListView listView = view.findViewById(R.id.fragment_sub_two_listview);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()),
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: I appear ");
+        userID = globalData.getUserID();
+        Log.e(TAG, "onResume: "+userID);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if(userID == null)
+                        return;
+                    runOk();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void initView() {
+        listView = view.findViewById(R.id.fragment_sub_two_listview);
+        arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()),
                 android.R.layout.simple_list_item_1, list);
+
+    }
+
+    private void initListView() {
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(this);
         Log.e(TAG, "initView: done");
@@ -95,4 +132,36 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
         Log.e(TAG, "onItemClick: I was cliked");
         showDialog();
     }
+    public void runOk() throws Exception {
+        // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("userID", userID)
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://121.199.22.121:8080/kit/getEqu?")
+                .post(requestBody)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            String result = Objects.requireNonNull(response.body()).string();
+            Log.e(TAG, "runOk: "+result);
+            GetEquipment getEquipment = globalData.gson.fromJson(result, GetEquipment.class);
+            for(int i = 0;i<getEquipment.getData().size();i++) {
+                String  equipmentInfo = "";
+                equipmentInfo += getEquipment.getData().get(i).getEquType();
+                equipmentInfo += " ";
+                equipmentInfo += getEquipment.getData().get(i).getEquName();
+                equipmentInfo += "\n";
+                equipmentInfo += getEquipment.getData().get(i).getEquYear();
+                equipmentInfo += " ";
+                equipmentInfo += getEquipment.getData().get(i).getEquTime();
+                list.add(equipmentInfo);
+            }
+        }
+        arrayAdapter.notifyDataSetChanged();
+    }
+
 }

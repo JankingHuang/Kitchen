@@ -51,7 +51,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class FragmentFour extends Fragment {
 
-    private static final String TAG = "FragmentFive";
+    private static final String TAG = "FragmentFour";
     private GlobalData globalData;
     private GetUser getUser;
     private DeleteUser deleteUser;
