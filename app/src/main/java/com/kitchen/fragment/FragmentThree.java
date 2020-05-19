@@ -51,14 +51,14 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
     private ActionButton actionButton;
     private View dialogView;
     LayoutInflater inflaterDialog;
-    private GlobalData globalData ;
+    private GlobalData globalData;
     private String userID;
     private OkHttpClient client = new OkHttpClient();
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle){
-        View view = inflater.inflate(R.layout.fragment_four,viewGroup,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle) {
+        View view = inflater.inflate(R.layout.fragment_four, viewGroup, false);
         inflaterDialog = inflater;
         list = new ArrayList<>();
         globalData = (GlobalData) getContext().getApplicationContext();
@@ -77,12 +77,12 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
         super.onResume();
         userID = globalData.getUserID();
         Log.e(TAG, "onResume: I appear ");
-        Log.e(TAG, "onResume: "+userID);
+        Log.e(TAG, "onResume: " + userID);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    if(userID == null)
+                    if (userID == null)
                         return;
                     runOk();
                 } catch (Exception e) {
@@ -108,20 +108,33 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
             String result = Objects.requireNonNull(response.body()).string();
-            Log.e(TAG, "runOk: "+result);
+            Log.e(TAG, "runOk: " + result);
             GetEquipment getEquipment = globalData.gson.fromJson(result, GetEquipment.class);
-            for(int i = 0;i<getEquipment.getData().size();i++) {
+            for (int i = 0; i < getEquipment.getData().size(); i++) {
                 Map<String, Object> map = new HashMap<>();
-                map.put("logo", R.drawable.thermometer256);
+                switch (getEquipment.getData().get(i).getEquType()) {
+                    case "E215":
+                        map.put("logo", R.drawable.thermometer256);
+                        break;
+                    case "E216":
+                        map.put("logo", R.drawable.smoke256);
+                        break;
+                    case "E217":
+                        map.put("logo", R.drawable.gas_industry_128px);
+                        break;
+                    case "E218":
+                        map.put("logo", R.drawable.light_80px);
+                        break;
+                }
                 map.put("equipmentType", getEquipment.getData().get(i).getEquType());
                 map.put("equipmentName", getEquipment.getData().get(i).getEquName());
                 map.put("equipmentLimitTime", getEquipment.getData().get(i).getEquYear());
                 map.put("equipmentTime", getEquipment.getData().get(i).getEquTime());
                 list.add(map);
-                Log.e(TAG, "runOk: ----->"+i);
+                Log.e(TAG, "runOk: ----->" + i);
             }
         }
-        Log.e(TAG, "runOk: --->list data "+ Arrays.toString(list.toArray()));
+        Log.e(TAG, "runOk: --->list data " + Arrays.toString(list.toArray()));
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -144,7 +157,7 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        Log.e(TAG, "onItemClick: "+position);
+        Log.e(TAG, "onItemClick: " + position);
         new AlertDialog.Builder(getContext())
                 .setTitle("警告")
                 .setMessage("该设备将会被删除！！！！")
@@ -158,20 +171,20 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
                         //            "equTime": "2018-06-10 24:00:07",
                         //            "equType": "E215"
                         //        }
-                        Log.e(TAG, "onClick: "+list.get(position));
+                        Log.e(TAG, "onClick: " + list.get(position));
                         String queTime = (String) list.get(position).get("equipmentTime");
                         String queType = (String) list.get(position).get("equipmentType");
                         DeleteEquipment deleteEquipment = new DeleteEquipment();
                         deleteEquipment.setEquTime(queTime);
                         deleteEquipment.setEquType(queType);
                         deleteEquipment.setUserID(userID);
-                        final String json = '[' +globalData.gson.toJson(deleteEquipment)+']';
-                        Log.e(TAG, "DeleteEquipment: "+json);
+                        final String json = '[' + globalData.gson.toJson(deleteEquipment) + ']';
+                        Log.e(TAG, "DeleteEquipment: " + json);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
-                                    FragmentThree.this.run("http://121.199.22.121:8080/kit/deleteEqu",json);
+                                    FragmentThree.this.run("http://121.199.22.121:8080/kit/deleteEqu", json);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -213,8 +226,8 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
         Spinner spinnerEquipmentType = view.findViewById(R.id.spinner_equiment_type);
         Spinner spinnerEquipmentTime = view.findViewById(R.id.spinner_equiment_limit_time);
         final EditText equipmentTime = view.findViewById(R.id.edit_equipment_time);
-         final String[] resultType = new String[1];
-         final String[] resultTime = new String[1];
+        final String[] resultType = new String[1];
+        final String[] resultTime = new String[1];
         spinnerEquipmentTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -243,7 +256,7 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
         ad1.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int i) {
                 AddEquipment addEquipment = new AddEquipment();
-                Log.e(TAG, "onClick: "+resultTime[0] +"/n"+resultType[0]);
+                Log.e(TAG, "onClick: " + resultTime[0] + "/n" + resultType[0]);
                 String aux[] = resultTime[0].split(" ");
                 int time = Integer.parseInt(aux[0]);
                 String[] string = resultType[0].split(" ");
@@ -256,12 +269,12 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
                 addEquipment.setEquYear(time);
                 addEquipment.setUserID(globalData.getUserID());
                 final String json = globalData.gson.toJson(addEquipment);
-                Log.e(TAG, "onClick: "+json);
+                Log.e(TAG, "onClick: " + json);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            FragmentThree.this.run("http://121.199.22.121:8080/kit/addEqu",json);
+                            FragmentThree.this.run("http://121.199.22.121:8080/kit/addEqu", json);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -275,8 +288,10 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
         });
         ad1.show();
     }
-    public static final MediaType JSON=MediaType.parse("application/json; charset=utf-8");
-    public void run(String url,String json) throws Exception {
+
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+    public void run(String url, String json) throws Exception {
         Request request = new Request.Builder()
                 .url(url)
                 .post(RequestBody.create(JSON, json))
@@ -285,7 +300,17 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
             String result = response.body().string();
-            Log.e(TAG, "run: "+result );
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        runOk();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            Log.e(TAG, "run: " + result);
         }
     }
 }
