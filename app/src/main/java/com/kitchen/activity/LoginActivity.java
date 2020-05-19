@@ -102,10 +102,10 @@ public class LoginActivity extends AppCompatActivity {
     public void login() {
         Log.d(TAG, "Login");
 
-        if (!validate()) {
-            onLoginFailed();
-            return;
-        }
+//        if (!validate()) {
+//            onLoginFailed();
+//            return;
+//        }
 
         loginButton.setEnabled(false);
 
@@ -126,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                         // On complete call either onLoginSuccess or onLoginFailed
                         postDataLogin();
                         progressDialog.dismiss();
+                        Toast.makeText(globalData, "账号创建成功", Toast.LENGTH_SHORT).show();
                     }
                 }, 3000);
     }

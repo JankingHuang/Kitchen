@@ -13,7 +13,7 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageButton android:src="@drawable/ic_account_circle_black_24dp"
+        <ImageButton android:src="@mipmap/kitchen"
             android:id="@+id/select_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:hint="ID" />
+                android:hint="用户ID" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Address Label -->

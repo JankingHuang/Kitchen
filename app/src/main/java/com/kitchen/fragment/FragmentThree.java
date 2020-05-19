@@ -165,7 +165,7 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
                         deleteEquipment.setEquTime(queTime);
                         deleteEquipment.setEquType(queType);
                         deleteEquipment.setUserID(userID);
-                        final String json = globalData.gson.toJson(deleteEquipment);
+                        final String json = '[' +globalData.gson.toJson(deleteEquipment)+']';
                         Log.e(TAG, "DeleteEquipment: "+json);
                         new Thread(new Runnable() {
                             @Override

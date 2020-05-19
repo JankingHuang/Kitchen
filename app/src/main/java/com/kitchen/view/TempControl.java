@@ -49,7 +49,7 @@ public class TempControl extends View {
     // 最低温度
     private int minTemp = 10;
     // 最高温度
-    private int maxTemp = 40;
+    private int maxTemp = 70;
     // 四格代表温度1度
     private int angleRate = 4;
     // 每格的角度
@@ -256,7 +256,7 @@ public class TempControl extends View {
 
         float tempWidth = tempPaint.measureText(temperature + "");
         float tempHeight = (tempPaint.ascent() + tempPaint.descent()) / 2;
-        canvas.drawText(temperature + "°", -tempWidth / 2 - dp2px(5), -tempHeight, tempPaint);
+        canvas.drawText(temperature + "%", -tempWidth / 2 - dp2px(5), -tempHeight, tempPaint);
         canvas.restore();
     }
 
