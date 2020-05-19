@@ -126,7 +126,7 @@ public class SignupActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
+        progressDialog.setMessage("创建账号...");
         progressDialog.show();
 
         userID = nameText.getText().toString();

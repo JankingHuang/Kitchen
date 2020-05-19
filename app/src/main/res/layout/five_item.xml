@@ -74,11 +74,6 @@
                     android:textColor="@color/colorPrimaryDark" />
             </LinearLayout>
         </LinearLayout>
-<!--        <TextView-->
-<!--            android:id="@+id/max_vaule"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_width="20dp"-->
-<!--            android:layout_height="match_parent"/>-->
     </RelativeLayout>
 
 </RelativeLayout>

@@ -10,6 +10,7 @@
         android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="70dp"/>
+
     <com.warkiz.widget.IndicatorSeekBar
         android:id="@+id/seekbar"
         android:layout_width="match_parent"

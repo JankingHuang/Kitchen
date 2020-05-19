@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.kitchen.activity.R;
 import com.kitchen.bean.GetEquipment;
 import com.kitchen.utils.GlobalData;
+import com.kitchen.view.FiveAdapter;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
@@ -39,14 +40,14 @@ import okhttp3.Response;
 
 public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickListener {
 
-    private List<String> list;
+    private List<Map<String, Object>> list;
     private static  String TAG = "SubFragmentTow";
     private GlobalData globalData ;
     private OkHttpClient client = new OkHttpClient();
     private String userID;
     private View view;
     private ListView listView;
-    private ArrayAdapter<String> arrayAdapter;
+    private FiveAdapter fiveAdapter;
 
 
     @Override
@@ -56,7 +57,6 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
         list = new ArrayList<>();
         Log.e(TAG, "onCreateView: I am SubFragmentTwo");
         initView();
-        initListView();
 //        getData();
         return view;
     }
@@ -87,15 +87,11 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
 
     private void initView() {
         listView = view.findViewById(R.id.fragment_sub_two_listview);
-        arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()),
-                android.R.layout.simple_list_item_1, list);
-
-    }
-
-    private void initListView() {
-        listView.setAdapter(arrayAdapter);
+        fiveAdapter = new FiveAdapter(getContext());
+        fiveAdapter.setList(list);
+        listView.setAdapter(fiveAdapter);
         listView.setOnItemClickListener(this);
-        Log.e(TAG, "initView: done");
+
     }
 
     private void showDialog(){
@@ -110,6 +106,7 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
             public void onClick(View view) {
                 dialog.dismiss();
                 //把阈值发送给服务器
+
             }
         });
         ((IndicatorSeekBar)view.findViewById(R.id.seekbar)).setOnSeekChangeListener(new OnSeekChangeListener() {
@@ -153,26 +150,37 @@ public class SubFragmentTwo extends Fragment implements AdapterView.OnItemClickL
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
             String result = Objects.requireNonNull(response.body()).string();
-            Log.e(TAG, "runOk: "+result);
+            Log.e(TAG, "runOk: " + result);
             GetEquipment getEquipment = globalData.gson.fromJson(result, GetEquipment.class);
-            for(int i = 0;i<getEquipment.getData().size();i++) {
-                String  equipmentInfo = "";
-                equipmentInfo += getEquipment.getData().get(i).getEquType();
-                equipmentInfo += " ";
-                equipmentInfo += getEquipment.getData().get(i).getEquName();
-                equipmentInfo += "\n";
-                equipmentInfo += getEquipment.getData().get(i).getEquYear();
-                equipmentInfo += " ";
-                equipmentInfo += getEquipment.getData().get(i).getEquTime();
-                list.add(equipmentInfo);
+            for (int i = 0; i < getEquipment.getData().size(); i++) {
+                Map<String, Object> map = new HashMap<>();
+                switch (getEquipment.getData().get(i).getEquType()) {
+                    case "E215":
+                        map.put("logo", R.drawable.thermometer256);
+                        break;
+                    case "E216":
+                        map.put("logo", R.drawable.smoke256);
+                        break;
+                    case "E217":
+                        map.put("logo", R.drawable.gas_industry_128px);
+                        break;
+                    case "E218":
+                        map.put("logo", R.drawable.light_80px);
+                        break;
+                }
+                map.put("equipmentType", getEquipment.getData().get(i).getEquType());
+                map.put("equipmentName", getEquipment.getData().get(i).getEquName());
+                map.put("equipmentLimitTime", getEquipment.getData().get(i).getEquYear());
+                map.put("equipmentTime", getEquipment.getData().get(i).getEquTime());
+                list.add(map);
+                Log.e(TAG, "runOk: ----->" + i);
             }
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    fiveAdapter.notifyDataSetChanged();
+                }
+            });
         }
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                arrayAdapter.notifyDataSetChanged();
-            }
-        });
     }
-
 }

@@ -250,7 +250,7 @@ public class FragmentThree extends Fragment implements AdapterView.OnItemClickLi
 
             }
         });
-        ad1.setTitle("连接设备");
+        ad1.setTitle("添加设备");
         ad1.setIcon(R.drawable.connection);
         ad1.setView(view);
         ad1.setPositiveButton("确认", new DialogInterface.OnClickListener() {
