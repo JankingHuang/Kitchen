@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                         // On complete call either onLoginSuccess or onLoginFailed
                         postDataLogin();
                         progressDialog.dismiss();
-                        Toast.makeText(globalData, "登入成功", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(globalData, "登入成功", Toast.LENGTH_SHORT).show();
                     }
                 }, 3000);
     }
@@ -201,6 +201,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         loginButton.setEnabled(true);
+        Toast.makeText(getBaseContext(), "登入成功", Toast.LENGTH_SHORT).show();
         finish();
     }
 
