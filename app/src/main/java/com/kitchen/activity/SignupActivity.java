@@ -115,11 +115,11 @@ public class SignupActivity extends AppCompatActivity {
     public void signup() {
         Log.d(TAG, "Signup");
 
-        if (!validate()) {
-            //TODO:数据合法性验证完成
-            onSignupFailed();
-            return;
-        }
+//        if (!validate()) {
+//            //TODO:数据合法性验证完成
+//            onSignupFailed();
+//            return;
+//        }
 
         signupButton.setEnabled(false);
 
@@ -145,8 +145,10 @@ public class SignupActivity extends AppCompatActivity {
                         // depending on success
                         postDataSignUp(filePath);
                         progressDialog.dismiss();
+                        Toast.makeText(SignupActivity.this, "账户创建成功", Toast.LENGTH_SHORT).show();
                     }
                 }, 3000);
+
     }
 
 
